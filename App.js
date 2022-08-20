@@ -6,10 +6,18 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import {SafeAreaView, View, Text} from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView, Button, StyleSheet} from 'react-native';
 import Greeting from './components/Greeting';
 import Box from './components/Box';
+import Counter from './components/Counter';
+
+const styles = StyleSheet.create({
+  full: {
+    flex: 1,
+    /*backgroundColor: 'cyan',*/
+  },
+});
 
 const App = () => {
   const name = {
@@ -17,12 +25,20 @@ const App = () => {
     boxName: 'B',
   };
 
+  const [visible, setVisible] = useState(true);
+  const onPress = () => {
+    console.log('visible : ', visible);
+    setVisible(!visible);
+  };
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={[styles.full]}>
       <Greeting name={name.greetName} />
-      <Box name={name.boxName} rounded={true} size="small" />
-      <Box name={name.boxName} rounded={false} size="medium" />
-      <Box name={name.boxName} rounded={true} size="large" color="pink" />
+      <Button title="toggle" onPress={onPress} />
+      {visible && (
+        <Box name={name.boxName} rounded={true} size="large" color="pink" />
+      )}
+      <Counter />
     </SafeAreaView>
   );
 };
